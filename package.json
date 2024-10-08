@@ -1,0 +1,8 @@
+{
+	"name": "budweiser",
+	"version": "9.9.9",
+	"private": true,
+	"scripts": {
+		"install": "cd back && npm install && cd ../front && npm install"
+	}
+}
