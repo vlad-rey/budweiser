@@ -4,5 +4,8 @@
 	"private": true,
 	"scripts": {
 		"install": "cd back && npm install && cd ../front && npm install"
+	},
+	"devDependencies": {
+		"@types/express": "^5.0.0"
 	}
 }
