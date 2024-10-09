@@ -33,9 +33,6 @@ const LinksForm: FunctionComponent<LinksFormProps> = (props) => {
 	return (
 		<Box className={style.section}>
 			<form onSubmit={formik.handleSubmit}>
-				<Typography variant="h6" gutterBottom>
-					Prod URL:
-				</Typography>
 				<TextField
 					fullWidth
 					id="prodUrl"
@@ -48,10 +45,6 @@ const LinksForm: FunctionComponent<LinksFormProps> = (props) => {
 					required
 					margin="normal"
 				/>
-
-				<Typography variant="h6" gutterBottom>
-					Dev URL:
-				</Typography>
 				<TextField
 					fullWidth
 					id="devUrl"

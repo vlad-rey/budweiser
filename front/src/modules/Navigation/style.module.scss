@@ -1,8 +1,15 @@
 .wrapper {
+	// display: none;
 	position: fixed;
 	z-index: 999;
 	left: 0;
 	top: 0;
+	width: 500px;
+	transform: translateX(-490px);
 	height: 100vw;
 	background-color: #f5f5f5;
+	transition: all 0.4s ease-in-out;
+	&:hover {
+		transform: translateX(0);
+	}
 }

@@ -4,6 +4,7 @@ import style from "./style.module.scss";
 import { FunctionComponent, useMemo, useEffect, useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import DiffMatchPatch from "diff-match-patch";
+import tagsData from "@/data/html-tags-attributes.json";
 
 interface ShowDifferencesAsCodeProps {
 	content_1: string;
@@ -15,6 +16,20 @@ const ShowDifferencesAsCode: FunctionComponent<ShowDifferencesAsCodeProps> = (
 ) => {
 	const dmp = new DiffMatchPatch();
 
+	// Функция для форматирования HTML с переносами строк
+	const formatHtmlWithLineBreaks = (html: string) => {
+		const { htmlTags, htmlAttributes } = tagsData;
+
+		return html
+			.replace(new RegExp(`(<(${htmlTags.join("|")})(\\s|>))`, "g"), "\n$1") // Открывающий тег с новой строки
+			.replace(
+				new RegExp(`(${htmlAttributes.join("|")})="([^"]*)"`, "g"),
+				'\n$1="$2"'
+			) // Атрибуты с новой строки
+			.replace(/(<)/g, "\n$1") // Закрывающий символ тега '>' с новой строки
+			.replace(/(<\/[a-zA-Z]+>)/g, "\n$1"); // Закрывающий тег с новой строки
+	};
+
 	// Сравниваем два HTML фрагмента и получаем патч
 	const diffHtml = useMemo(() => {
 		const diff = dmp.diff_main(props.content_1, props.content_2);
@@ -22,13 +37,7 @@ const ShowDifferencesAsCode: FunctionComponent<ShowDifferencesAsCodeProps> = (
 
 		return diff
 			.map(([operation, text]) => {
-				// Добавляем перенос строки после каждого фрагмента контента
-				const formattedText = text
-					.replace(/(>)(<)/g, "$1\n$2") // Перенос после закрывающего тега перед новым тегом
-					.replace(/"([^"]*)"/g, '"$1"\n') // Перенос после закрывающей кавычки
-					.replace(/<(\/?\w+)([^>]*)>/g, "<$1$2>\n") // Перенос после названия тега
-					.replace(/</g, "\n<") // Перенос перед открывающими тегами
-					.replace(/>(?!\s*$)/g, ">\n"); // Перенос после закрывающего тега, исключая пустую строку
+				const formattedText = formatHtmlWithLineBreaks(text); // Применяем форматирование
 
 				if (operation === 1) {
 					return `##added##${formattedText}###added###`;

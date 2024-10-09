@@ -4,9 +4,13 @@ import { FunctionComponent } from "react";
 import { Typography, List, ListItem, Box } from "@mui/material";
 import { useQuery } from "@/services/useQuery";
 import style from "./style.module.scss";
+import LinksForm from "../Form";
+import Link from "next/link";
 
 interface NavigationProps {
 	activeNav: string;
+	prodUrl: string;
+	devUrl: string;
 }
 
 const Navigation: FunctionComponent<NavigationProps> = (props) => {
@@ -21,8 +25,8 @@ const Navigation: FunctionComponent<NavigationProps> = (props) => {
 			<Box
 				sx={{
 					width: 500,
-					paddingTop: 2,
 					paddingBottom: 2,
+					cursor: "default",
 				}}
 			>
 				<Typography
@@ -37,38 +41,81 @@ const Navigation: FunctionComponent<NavigationProps> = (props) => {
 				>
 					Budweiser
 				</Typography>
+				<LinksForm prodUrl={props.prodUrl} devUrl={props.devUrl} />
 				<List sx={{ padding: "20px 0" }}>
-					{[
-						"page-prod-html",
-						"page-dev-html",
-						"page-prod-code",
-						"page-dev-code",
-						"pages-differences",
-					].map((page) => (
-						<ListItem
-							key={page}
-							component="button"
-							onClick={() => handleSetUrls(page)}
-							sx={{
-								borderRadius: 1,
-								paddingLeft: 2,
-								paddingRight: 2,
-								backgroundColor:
-									props.activeNav === page ? "#e3f2fd" : "#f5f5f5",
-								color: props.activeNav === page ? "#1976d2" : "inherit",
-								"&:hover": {
-									backgroundColor: "#e0e0e0", // Цвет фона при наведении
-								},
-								"&:active": {
-									backgroundColor: "#bdbdbd", // Цвет фона при нажатии
-								},
-							}}
-						>
-							<Typography>
-								{page.replace(/-/g, " ").replace(/^\w/, (c) => c.toUpperCase())}
-							</Typography>
-						</ListItem>
-					))}
+					{["page-prod-code", "page-dev-code", "pages-differences"].map(
+						(page) => (
+							<ListItem
+								key={page}
+								component="button"
+								onClick={() => handleSetUrls(page)}
+								sx={{
+									borderRadius: 1,
+									paddingLeft: 2,
+									paddingRight: 2,
+									backgroundColor:
+										props.activeNav === page ? "#e3f2fd" : "#f5f5f5",
+									color: props.activeNav === page ? "#1976d2" : "inherit",
+									"&:hover": {
+										backgroundColor: "#e0e0e0", // Цвет фона при наведении
+									},
+									"&:active": {
+										backgroundColor: "#bdbdbd", // Цвет фона при нажатии
+									},
+								}}
+							>
+								<Typography>
+									{page
+										.replace(/-/g, " ")
+										.replace(/^\w/, (c) => c.toUpperCase())}
+								</Typography>
+							</ListItem>
+						)
+					)}
+					<ListItem
+						component="button"
+						sx={{
+							borderRadius: 1,
+							paddingLeft: 2,
+							paddingRight: 2,
+							backgroundColor: "#f5f5f5",
+							color: "inherit",
+							"&:hover": {
+								backgroundColor: "#e0e0e0", // Цвет фона при наведении
+							},
+							"&:active": {
+								backgroundColor: "#bdbdbd", // Цвет фона при нажатии
+							},
+						}}
+					>
+						<Typography>
+							<Link href={props.devUrl} target="_blank">
+								{props.devUrl}
+							</Link>
+						</Typography>
+					</ListItem>
+					<ListItem
+						component="button"
+						sx={{
+							borderRadius: 1,
+							paddingLeft: 2,
+							paddingRight: 2,
+							backgroundColor: "#f5f5f5",
+							color: "inherit",
+							"&:hover": {
+								backgroundColor: "#e0e0e0", // Цвет фона при наведении
+							},
+							"&:active": {
+								backgroundColor: "#bdbdbd", // Цвет фона при нажатии
+							},
+						}}
+					>
+						<Typography>
+							<Link href={props.prodUrl} target="_blank">
+								{props.prodUrl}
+							</Link>
+						</Typography>
+					</ListItem>
 				</List>
 			</Box>
 		</div>

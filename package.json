@@ -6,5 +6,8 @@
 		"install": "cd back && npm install && cd front && npm install",
 		"dev:front": "cd front && npm run dev",
 		"dev:back": "cd back && npm run dev"
+	},
+	"dependencies": {
+		"@types/express": "^5.0.0"
 	}
 }

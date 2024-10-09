@@ -1,6 +1,6 @@
 const express = require("express");
 require("dotenv").config();
-const { fetchHtmlContent } = require("./modules/fetchHtml");
+const { fetchHtmlContent } = require("./fetchHtml");
 
 const app = express();
 const port = process.env.PORT || 3001;
