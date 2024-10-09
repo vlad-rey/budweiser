@@ -1,0 +1,17 @@
+.section {
+	width: 100%;
+	max-width: 800px;
+
+	span {
+		text-wrap: wrap;
+		// word-break: break-all;
+	}
+	:global(.added) {
+		background-color: red !important;
+		// color: red !important;
+	}
+}
+.error {
+	background-color: red !important;
+	color: red !important;
+}

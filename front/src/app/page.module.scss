@@ -1,35 +1,13 @@
-.result {
-	margin-top: 20px;
-	max-width: 800px;
-	background-color: #ffffff;
-	padding: 20px;
-	border-radius: 8px;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.main {
 }
-
-.nav-button {
-	position: fixed;
-	bottom: 20px;
-	padding: 10px 20px;
-	background-color: #a0e5b9;
-	color: #4a4a4a;
-	border: none;
-	border-radius: 5px;
-	cursor: pointer;
-	font-size: 16px;
-	width: max-content;
+.wrapper {
+	overflow-x: scroll;
+	display: grid;
+	grid-template-columns: 1fr 5fr;
 }
-.prev-button {
-	left: 20px;
-}
-.next-button {
-	right: 20px;
-}
-.added {
-	background-color: #4caf50; /* Зелёный фон для добавленных элементов */
-	color: white;
-}
-.removed {
-	background-color: #f44336; /* Красный фон для удалённых элементов */
-	color: white;
+.content {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	padding: 100px 50px;
 }
