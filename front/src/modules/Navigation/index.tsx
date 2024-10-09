@@ -1,53 +1,79 @@
-import React from "react";
-import { AppBar, Toolbar, Typography, List, ListItem } from "@mui/material";
+"use client";
 
-const Navigation: React.FC = () => {
+import { FunctionComponent } from "react";
+import { Typography, List, ListItem, Box } from "@mui/material";
+import { useQuery } from "@/services/useQuery";
+import style from "./style.module.scss";
+
+interface NavigationProps {
+	activeNav: string;
+}
+
+const Navigation: FunctionComponent<NavigationProps> = (props) => {
+	const { updatePageQuery } = useQuery();
+
+	const handleSetUrls = (nav: string) => {
+		updatePageQuery({ nav }, false);
+	};
+
 	return (
-		<AppBar position="static">
-			<TabContext value={value}>
-				<Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-					<TabList onChange={handleChange} aria-label="lab API tabs example">
-						<Tab label="Item One" value="1" />
-						<Tab label="Item Two" value="2" />
-						<Tab label="Item Three" value="3" />
-					</TabList>
-				</Box>
-				<TabPanel value="1">Item One</TabPanel>
-				<TabPanel value="2">Item Two</TabPanel>
-				<TabPanel value="3">Item Three</TabPanel>
-			</TabContext>
-			<CustomTabPanel value={value} index={0}>
-				Item One
-			</CustomTabPanel>
-			<CustomTabPanel value={value} index={1}>
-				Item Two
-			</CustomTabPanel>
-			<CustomTabPanel value={value} index={2}>
-				Item Three
-			</CustomTabPanel>
-			<Toolbar>
-				<Typography variant="h6" component="div">
-					Navigation
+		<div className={style.wrapper}>
+			<Box
+				sx={{
+					width: 500,
+					backgroundColor: "#f5f5f5", // Цвет фона
+					paddingTop: 2,
+					paddingBottom: 2,
+					height: "100vh",
+				}}
+			>
+				<Typography
+					variant="h6"
+					component="div"
+					sx={{
+						padding: 2,
+						textAlign: "left",
+						backgroundColor: "#1976d2", // Цвет фона заголовка
+						color: "white", // Цвет текста заголовка
+					}}
+				>
+					Budweiser
 				</Typography>
-				<List sx={{ display: "flex", flexDirection: "row", padding: 0 }}>
-					<ListItem>
-						<Typography>Page Prod HTML</Typography>
-					</ListItem>
-					<ListItem>
-						<Typography>Page Dev HTML</Typography>
-					</ListItem>
-					<ListItem>
-						<Typography>Page Prod Code</Typography>
-					</ListItem>
-					<ListItem>
-						<Typography>Page Dev Code</Typography>
-					</ListItem>
-					<ListItem>
-						<Typography>Pages Differences</Typography>
-					</ListItem>
+				<List sx={{ padding: "20px 0" }}>
+					{[
+						"page-prod-html",
+						"page-dev-html",
+						"page-prod-code",
+						"page-dev-code",
+						"pages-differences",
+					].map((page) => (
+						<ListItem
+							key={page}
+							component="button"
+							onClick={() => handleSetUrls(page)}
+							sx={{
+								borderRadius: 1,
+								paddingLeft: 2,
+								paddingRight: 2,
+								backgroundColor:
+									props.activeNav === page ? "#e3f2fd" : "#f5f5f5",
+								color: props.activeNav === page ? "#1976d2" : "inherit",
+								"&:hover": {
+									backgroundColor: "#e0e0e0", // Цвет фона при наведении
+								},
+								"&:active": {
+									backgroundColor: "#bdbdbd", // Цвет фона при нажатии
+								},
+							}}
+						>
+							<Typography>
+								{page.replace(/-/g, " ").replace(/^\w/, (c) => c.toUpperCase())}
+							</Typography>
+						</ListItem>
+					))}
 				</List>
-			</Toolbar>
-		</AppBar>
+			</Box>
+		</div>
 	);
 };
 
