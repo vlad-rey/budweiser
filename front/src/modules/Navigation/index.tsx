@@ -89,7 +89,7 @@ const Navigation: FunctionComponent<NavigationProps> = (props) => {
 						}}
 					>
 						<Typography>
-							<Link href={props.devUrl} target="_blank">
+							<Link href={props.devUrl || "#"} target="_blank">
 								{props.devUrl}
 							</Link>
 						</Typography>
@@ -111,7 +111,7 @@ const Navigation: FunctionComponent<NavigationProps> = (props) => {
 						}}
 					>
 						<Typography>
-							<Link href={props.prodUrl} target="_blank">
+							<Link href={props.prodUrl || "#"} target="_blank">
 								{props.prodUrl}
 							</Link>
 						</Typography>
