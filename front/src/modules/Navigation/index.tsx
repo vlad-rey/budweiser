@@ -43,35 +43,36 @@ const Navigation: FunctionComponent<NavigationProps> = (props) => {
 				</Typography>
 				<LinksForm prodUrl={props.prodUrl} devUrl={props.devUrl} />
 				<List sx={{ padding: "20px 0" }}>
-					{["page-prod-code", "page-dev-code", "pages-differences"].map(
-						(page) => (
-							<ListItem
-								key={page}
-								component="button"
-								onClick={() => handleSetUrls(page)}
-								sx={{
-									borderRadius: 1,
-									paddingLeft: 2,
-									paddingRight: 2,
-									backgroundColor:
-										props.activeNav === page ? "#e3f2fd" : "#f5f5f5",
-									color: props.activeNav === page ? "#1976d2" : "inherit",
-									"&:hover": {
-										backgroundColor: "#e0e0e0", // Цвет фона при наведении
-									},
-									"&:active": {
-										backgroundColor: "#bdbdbd", // Цвет фона при нажатии
-									},
-								}}
-							>
-								<Typography>
-									{page
-										.replace(/-/g, " ")
-										.replace(/^\w/, (c) => c.toUpperCase())}
-								</Typography>
-							</ListItem>
-						)
-					)}
+					{[
+						"page-prod-code",
+						"page-dev-code",
+						"pages-differences-code",
+						"pages-differences-html",
+					].map((page) => (
+						<ListItem
+							key={page}
+							component="button"
+							onClick={() => handleSetUrls(page)}
+							sx={{
+								borderRadius: 1,
+								paddingLeft: 2,
+								paddingRight: 2,
+								backgroundColor:
+									props.activeNav === page ? "#e3f2fd" : "#f5f5f5",
+								color: props.activeNav === page ? "#1976d2" : "inherit",
+								"&:hover": {
+									backgroundColor: "#e0e0e0", // Цвет фона при наведении
+								},
+								"&:active": {
+									backgroundColor: "#bdbdbd", // Цвет фона при нажатии
+								},
+							}}
+						>
+							<Typography>
+								{page.replace(/-/g, " ").replace(/^\w/, (c) => c.toUpperCase())}
+							</Typography>
+						</ListItem>
+					))}
 					<ListItem
 						component="button"
 						sx={{
@@ -89,7 +90,7 @@ const Navigation: FunctionComponent<NavigationProps> = (props) => {
 						}}
 					>
 						<Typography>
-							<Link href={props.devUrl} target="_blank">
+							<Link href={props.devUrl || "#"} target="_blank">
 								{props.devUrl}
 							</Link>
 						</Typography>
@@ -111,7 +112,7 @@ const Navigation: FunctionComponent<NavigationProps> = (props) => {
 						}}
 					>
 						<Typography>
-							<Link href={props.prodUrl} target="_blank">
+							<Link href={props.prodUrl || "#"} target="_blank">
 								{props.prodUrl}
 							</Link>
 						</Typography>

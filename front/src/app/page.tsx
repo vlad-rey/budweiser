@@ -32,7 +32,7 @@ export default async function Home({
 						{nav === "page-prod-code" && (
 							<ShowPageAsCode content={pagesContent.prodHtml || ""} />
 						)}
-						{nav === "pages-differences" && (
+						{nav === "pages-differences-code" && (
 							<ShowDifferenesAsCode
 								content_1={pagesContent.prodHtml || ""}
 								content_2={pagesContent.devHtml || ""}
