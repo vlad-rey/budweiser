@@ -110,28 +110,8 @@ const ShowDifferencesAsCode: FunctionComponent<ShowDifferencesAsCodeProps> = (
 			</div>
 
 			{/* Кнопки навигации по ошибкам */}
-			<button
-				onClick={handlePrevError}
-				style={{
-					position: "fixed",
-					top: "20px",
-					left: "20px",
-					zIndex: 1000,
-				}}
-			>
-				Назад
-			</button>
-			<button
-				onClick={handleNextError}
-				style={{
-					position: "fixed",
-					top: "20px",
-					left: "80px",
-					zIndex: 1000,
-				}}
-			>
-				Вперёд
-			</button>
+			<button onClick={handlePrevError}>Назад</button>
+			<button onClick={handleNextError}>Вперёд</button>
 		</section>
 	);
 };

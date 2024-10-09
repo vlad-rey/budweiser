@@ -21,10 +21,8 @@ const Navigation: FunctionComponent<NavigationProps> = (props) => {
 			<Box
 				sx={{
 					width: 500,
-					backgroundColor: "#f5f5f5", // Цвет фона
 					paddingTop: 2,
 					paddingBottom: 2,
-					height: "100vh",
 				}}
 			>
 				<Typography
