@@ -3,6 +3,8 @@
 	"version": "9.9.9",
 	"private": true,
 	"scripts": {
-		"install": "cd back && npm install && cd ../front && npm install"
+		"install": "cd back && npm install && cd front && npm install",
+		"dev:front": "cd front && npm run dev",
+		"dev:back": "cd back && npm run dev"
 	}
 }
