@@ -19,25 +19,26 @@ const ShowDifferencesAsCode: FunctionComponent<ShowDifferencesAsCodeProps> = (
 	// Функция для форматирования HTML с переносами строк
 	const formatHtmlWithLineBreaks = (html: string) => {
 		const { htmlTags, htmlAttributes } = tagsData;
-	
+
 		// Форматируем HTML, добавляя переносы
 		let formattedHtml = html
 			// Убираем пробелы перед открывающими и закрывающими тегами
-			.replace(/\s*(<\/?[a-zA-Z]+[^>]*>)\s*/g, '$1') 
+			.replace(/\s*(<\/?[a-zA-Z]+[^>]*>)\s*/g, "$1")
 			// Заменяем открывающие и закрывающие теги на новые строки
-			.replace(/(<\/?[a-zA-Z][^>]*>)/g, '\n$1') 
+			.replace(/(<\/?[a-zA-Z][^>]*>)/g, "\n$1")
 			// Заменяем атрибуты на новой строке, если они есть
-			.replace(new RegExp(`(${htmlAttributes.join("|")})="([^"]*)"`, "g"), '\n  $1="$2"') 
+			.replace(
+				new RegExp(`(${htmlAttributes.join("|")})="([^"]*)"`, "g"),
+				'\n  $1="$2"'
+			)
 			// Добавляем отступы для вложенных тегов
-			.replace(/(\n\s*<)/g, '\n  <'); 
-	
+			.replace(/(\n\s*<)/g, "\n  <");
+
 		// Удаляем лишние переносы в начале и конце строки
 		formattedHtml = formattedHtml.trim();
-	
+
 		return formattedHtml;
 	};
-	
-
 
 	// Сравниваем два HTML фрагмента и получаем патч
 	const diffHtml = useMemo(() => {
@@ -54,7 +55,7 @@ const ShowDifferencesAsCode: FunctionComponent<ShowDifferencesAsCodeProps> = (
 				if (operation === -1) {
 					return `##deleted##${formattedText}###deleted###`;
 				}
-				return formattedText ;
+				return formattedText;
 			})
 			.join("");
 	}, [props.content_1, props.content_2]);
@@ -62,51 +63,53 @@ const ShowDifferencesAsCode: FunctionComponent<ShowDifferencesAsCodeProps> = (
 	const [errorIds, setErrorIds] = useState<string[]>([]); // Список ID всех изменений
 	const [currentErrorIndex, setCurrentErrorIndex] = useState<number>(0); // Индекс текущей ошибки
 
-	//TODO: костыль, чтобы не видеть диффы в ссылках 
+	//TODO: костыль, чтобы не видеть диффы в ссылках
 	// Функция для замены маркеров на HTML элементы после рендеринга
-	// useEffect(() => {
-	// 	const contentElement = document.getElementById("differeces");
-	
-	// 	if (contentElement) {
-	// 		// Генерация уникальных ID
-	// 		let uniqueIdCounter = 0;
-	// 		const ids: string[] = [];
-	
-	// 		const uniqueId = () => {
-	// 			uniqueIdCounter += 1;
-	// 			return `diff-${uniqueIdCounter}`;
-	// 		};
-	
-	// 		// Регулярное выражение для проверки URL
-	// 		const urlRegex = /https?:\/\/[^\s/$.?#].[^\s]*/g; // Подходит для всех URL
-	
-	// 		// Удаляем все URL из содержимого перед сравнением
-	// 		const cleanedContent = contentElement.innerHTML.replace(urlRegex, '[URL]');
-	
-	// 		contentElement.innerHTML = cleanedContent
-	// 			.replace(/##added##(.*?)###added###/g, (match, p1) => {
-	// 				// Игнорируем изменения, если текст содержит '[URL]'
-	// 				if (p1.includes('[URL]')) {
-	// 					return p1; // Вернуть текст без изменений
-	// 				}
-	// 				const id = uniqueId();
-	// 				ids.push(id); // Добавляем id в массив ошибок
-	// 				return `<div class="added" id="${id}" style="display: inline;">${p1}</div>`;
-	// 			})
-	// 			.replace(/##deleted##(.*?)###deleted###/g, (match, p1) => {
-	// 				// Игнорируем изменения, если текст содержит '[URL]'
-	// 				if (p1.includes('[URL]')) {
-	// 					return p1; // Вернуть текст без изменений
-	// 				}
-	// 				const id = uniqueId();
-	// 				ids.push(id); // Добавляем id в массив ошибок
-	// 				return `<div class="deleted" id="${id}" style="display: inline;">${p1}</div>`;
-	// 			});
-	
-	// 		setErrorIds(ids); // Сохраняем все уникальные ID ошибок
-	// 	}
-	// }, [diffHtml]);
-	
+	useEffect(() => {
+		const contentElement = document.getElementById("differeces");
+
+		if (contentElement) {
+			// Генерация уникальных ID
+			let uniqueIdCounter = 0;
+			const ids: string[] = [];
+
+			const uniqueId = () => {
+				uniqueIdCounter += 1;
+				return `diff-${uniqueIdCounter}`;
+			};
+
+			// Регулярное выражение для проверки URL
+			const urlRegex = /https?:\/\/[^\s/$.?#].[^\s]*/g; // Подходит для всех URL
+
+			// Удаляем все URL из содержимого перед сравнением
+			const cleanedContent = contentElement.innerHTML.replace(
+				urlRegex,
+				"[URL]"
+			);
+
+			contentElement.innerHTML = cleanedContent
+				.replace(/##added##(.*?)###added###/g, (match, p1) => {
+					// Игнорируем изменения, если текст содержит '[URL]'
+					if (p1.includes("[URL]")) {
+						return p1; // Вернуть текст без изменений
+					}
+					const id = uniqueId();
+					ids.push(id); // Добавляем id в массив ошибок
+					return `<div class="added" id="${id}" style="display: inline;">${p1}</div>`;
+				})
+				.replace(/##deleted##(.*?)###deleted###/g, (match, p1) => {
+					// Игнорируем изменения, если текст содержит '[URL]'
+					if (p1.includes("[URL]")) {
+						return p1; // Вернуть текст без изменений
+					}
+					const id = uniqueId();
+					ids.push(id); // Добавляем id в массив ошибок
+					return `<div class="deleted" id="${id}" style="display: inline;">${p1}</div>`;
+				});
+
+			setErrorIds(ids); // Сохраняем все уникальные ID ошибок
+		}
+	}, [diffHtml]);
 
 	// Функция для скролла к определённому элементу по его ID
 	const scrollToError = (index: number) => {
